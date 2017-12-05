@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!-- (以上)文件头在解压的文件夹中mybatis-3.4.4.pdf文件中搜索mybatis-3-config.dtd即可得到 -->
+<configuration>
+
+    <!-- 指定属性配置文件 -->
+    <properties resource="jdbc.properties" />
+    <!--
+        配置类的别名,我建议使用package这种写法
+        这样写会将该包中所有类的简单类名配置为别名,简单方便
+        ,还有别的写法,自行google
+     -->
+    <typeAliases>
+        <package name="model" />
+    </typeAliases>
+    <!-- 配置MyBatis运行环境 -->
+    <environments default="development">
+        <environment id="development">
+            <!-- 使用JDBC事务管理 -->
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <!-- 注册映射文件 -->
+    <mappers>
+        <mapper resource="dao/mapper.xml"/>
+        <!--
+            实际开发中可能有多个映射文件,而其中sql标签的id相同时候,执行过程就会报错
+            我们可以根据mapper映射文件中的namespace属性来区分,调用时候用如下方式
+            namespace.id
+        -->
+        <!--
+            <mapper resource="dao/mapper2.xml"/>
+        -->
+    </mappers>
+
+</configuration>
